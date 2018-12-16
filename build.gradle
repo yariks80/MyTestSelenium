@@ -18,3 +18,17 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.141.59'
 
 }
+task myTestChrome(type:Test){
+    systemProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe")
+    systemProperty("driver", "chrome")
+      useTestNG {
+          suites "testng.xml"
+      }
+}
+task myTestFirefox(type:Test){
+    systemProperty("webdriver.gecko.driver", "drivers\\geckodriver.exe")
+    systemProperty("driver", "firefox")
+    useTestNG {
+        suites "testng.xml"
+    }
+}
