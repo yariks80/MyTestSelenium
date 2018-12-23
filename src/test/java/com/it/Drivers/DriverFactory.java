@@ -3,23 +3,29 @@ package com.it.Drivers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import java.util.concurrent.TimeUnit;
+
+import static com.it.Common.Constants.BASE_URL;
 
 public class DriverFactory {
     static public WebDriver getDriver() {
-        WebDriver driver;
-        String sysDriver = System.getProperty("driver");
-
-        if ("firefox".equals(sysDriver)) {
-            driver = new FirefoxDriver();
-        } else if ("ie".equals(sysDriver)) {
-            driver = new InternetExplorerDriver();
+        String property = System.getProperty("driver");
+        WebDriver driver = null;
+        if (property != null) {
+            if ("chrome".equals(property)) {
+                driver = new ChromeDriver();
+            } else if ("gecko".equals(property)) {
+                driver = new FirefoxDriver();
+            }
         } else {
-            System.getProperty("webdriver.chrome.driver", "drivers\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
             driver = new ChromeDriver();
         }
         driver.manage().window().maximize();
-        driver.get("https://www.i.ua/");
-        return  driver;
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get(BASE_URL);
+        return driver;
     }
-}
+    }
+

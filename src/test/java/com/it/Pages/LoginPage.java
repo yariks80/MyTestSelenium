@@ -16,6 +16,7 @@ public class LoginPage extends BasePage {
 
 
     protected void login(String name, String pass) {
+        log.info(String.format("User login name - %s, password - %s ",name,pass));
         login.sendKeys(name);
         password.sendKeys(pass);
         submit.click();
